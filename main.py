@@ -10,9 +10,14 @@ if __name__ == "__main__":
     task3 = RunBlastTask()
     task4 = EvaluationTask()
     
-    task1.run()
-    task2.run()
-    task3.run()
+    '''
+    Running the BLAST retrieval takes a lot of time.
+    Only uncomment the first three tasks if necessary!
+    '''
+
+    # task1.run()
+    # task2.run()
+    # task3.run()
     task4.run()
 
     Logger.log("Done.")

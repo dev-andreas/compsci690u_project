@@ -6,6 +6,9 @@ from datasets import load_dataset
 import subprocess
 
 class CreateDatasetTask(Task):
+    '''
+    This class downloads the necessary datasets from Hugging Face Hub, creates fasta files, and generates the BLAST database.
+    '''
 
     def run(self):
         Logger.log("Generating datasets...")
@@ -19,6 +22,8 @@ class CreateDatasetTask(Task):
 
         arch_corpus_ds = arch_ds["train"]
         arch_query_ds = arch_ds["test"]
+        Logger.log(f"arch corpus size: {len(arch_corpus_ds)}")
+        Logger.log(f"arch query size: {len(arch_query_ds)}")
 
         Logger.small_log("Creating archaea fasta files...")
         CreateDatasetTask.create_fasta_file_from_dataset(arch_corpus_ds, configuration.ARCH_CORPUS_FILENAME)
@@ -36,6 +41,8 @@ class CreateDatasetTask(Task):
 
         euk_corpus_ds = euk_ds["train"]
         euk_query_ds = euk_ds["test"]
+        Logger.log(f"euk corpus size: {len(euk_corpus_ds)}")
+        Logger.log(f"euk query size: {len(euk_query_ds)}")
 
         Logger.small_log("Creating eukaryote fasta files...")
         CreateDatasetTask.create_fasta_file_from_dataset(euk_corpus_ds, configuration.EUK_CORPUS_FILENAME)
@@ -46,6 +53,9 @@ class CreateDatasetTask(Task):
 
     @staticmethod
     def create_fasta_file_from_dataset(dataset, filename):
+        '''
+        Creates the fasta file from dataset.
+        '''
         f = open(filename, "w")
         for entry in dataset:
             f.write(f">{entry['Entry']} [name={entry['Protein names']}]\n{entry['Sequence']}\n")
@@ -53,4 +63,7 @@ class CreateDatasetTask(Task):
 
     @staticmethod
     def makeblastdb(fasta_filename, database_dir):
+        '''
+        Creates the blast database from fasta files.
+        '''
         subprocess.run(["makeblastdb", "-dbtype", "prot", "-in", fasta_filename, "-out", database_dir])

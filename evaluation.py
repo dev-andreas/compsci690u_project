@@ -6,6 +6,10 @@ import matplotlib.pyplot as plt
 import json
 
 class EvaluationTask(Task):
+    '''
+    This task calculates the MAP@5 values and plots the figures.
+    '''
+
     def run(self):
         Logger.log("Evaluating results...")
         arch_ground_truth, euk_ground_truth = EvaluationTask.load_ground_truth()
@@ -55,6 +59,9 @@ class EvaluationTask(Task):
 
     @staticmethod
     def precision_at_k(actual, predicted, k):
+        '''
+        Calculates the precision at k
+        '''
         predicted_at_k = predicted[:k]
 
         tp = 0
@@ -66,6 +73,9 @@ class EvaluationTask(Task):
 
     @staticmethod
     def average_precision_at_k(actual, predicted, k):
+        '''
+        Calculates the average precision at k
+        '''
         precision_at_k_acc = 0
         adjusted_k = min(k, len(predicted))
         for i in range(adjusted_k):
@@ -75,6 +85,9 @@ class EvaluationTask(Task):
 
     @staticmethod
     def mean_average_precision_at_k(ground_truth, results, k):
+        '''
+        Calculates the mean average precision at k (MAP@5).
+        '''
         average_precision_at_k_acc = 0
 
         for seqid in results:
@@ -84,6 +97,9 @@ class EvaluationTask(Task):
 
     @staticmethod
     def load_output(sub_matrix, word_size):
+        '''
+        Loads the blast results from json files.
+        '''
         archaea_blast_output_file = open(f"results/archaea_{sub_matrix}_{word_size}.json", "r")
         arch_blast_output = json.load(archaea_blast_output_file)
         archaea_blast_output_file.close()
@@ -96,6 +112,9 @@ class EvaluationTask(Task):
     
     @staticmethod
     def load_ground_truth():
+        '''
+        Loads the ground truth from json files.
+        '''
         archaea_ground_truth_file = open(configuration.ARCH_GROUND_TRUTH_FILENAME, "r")
         arch_ground_truth = json.load(archaea_ground_truth_file)
         archaea_ground_truth_file.close()

@@ -2,10 +2,27 @@
 
 ## How to install and start:
 
-Assuming that Python and the BLAST CLI are installed, run the following command to install the necessary packages:
+Assuming that Python 3 and the BLAST CLI are installed, run the following command to create a virtual environment:
 
-    python -m pip install -r requirements.txt
+    $ python3 -m venv .venv
 
-Afterwards, run
+Activate the virtual environment with this command:
 
-    python main.py
+    $ source .venv/bin/activate
+
+Confirm that the virtual environment is running with this command:
+
+    $ which python
+
+Install the packages that are contained in the `requirements.txt` file:
+
+    $ pip install -r requirements.txt
+
+If this doesnt work, install the following packages manually:
+
+    $ pip install datasets
+    $ pip install matplotlib
+
+Afterwards, run the following script to start the program:
+
+    $ python main.py

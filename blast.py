@@ -6,7 +6,9 @@ import subprocess
 import json
 
 class RunBlastTask(Task):
-
+    '''
+    This class runs the blastp command and stores the results in a text file.
+    '''
 
 
     def run(self):
@@ -35,17 +37,16 @@ class RunBlastTask(Task):
 
     @staticmethod
     def blastp(query_file, db_name, out_file, matrix="BLOSUM62", word_size=3):
+        '''
+        This method runs the blastp command
+        '''
         subprocess.run(["blastp", "-query", query_file, "-db", db_name, "-out", out_file, "-matrix", matrix, "-word_size", str(word_size), "-outfmt", "6 qseqid sseqid bitscore"])
 
     @staticmethod
-    def blastp_word_size_all(query_file, db_name, out_name, min_word_size=2, max_word_size=10):
-        for i in range(min_word_size, max_word_size + 1):
-            out_name_i = out_name + "_word_size_" + i
-            RunBlastTask.blastp_word_size(query_file, db_name, out_name_i + ".txt", i)
-            RunBlastTask.blast_to_json(out_name_i + ".txt", out_name_i + ".json")
-
-    @staticmethod
     def blast_to_json(blast_filename, json_filename):
+        '''
+        This method converts the blast output to a json file.
+        '''
         f = open(blast_filename, "r")
         result = {}
         for line in f:

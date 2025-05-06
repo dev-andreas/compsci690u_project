@@ -6,6 +6,9 @@ from datasets import load_dataset
 import json
 
 class CreateGroundTruthTask(Task):
+    '''
+    This class downloads the necessary ground truth datasets from Hugging Face Hub and saves them in a json file.
+    '''
 
     def run(self):
         Logger.log("Generating ground truth...")

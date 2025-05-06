@@ -1,3 +1,5 @@
+# This file contains the configuration variables.
+
 # corpus files
 EUK_CORPUS_FILENAME = "datasets/euk_corpus.fasta"
 ARCH_CORPUS_FILENAME = "datasets/arch_corpus.fasta"
